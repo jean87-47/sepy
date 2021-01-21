@@ -1,0 +1,35 @@
+{% load static %}
+{% load bootstrap4 %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>sepy</title>
+
+        <script src="https://kit.fontawesome.com/8c96a15858.js" crossorigin="anonymous"></script>
+
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+
+    {% block css %}
+    {% endblock %}
+
+    {% bootstrap_css %}
+
+</head>
+
+<body>
+
+<div class="container">
+
+      <p> <img src="{%  static 'articles/images/cloud (2).jpg' %}" width="200"></p>
+
+
+see it's not so bad is it?
+{% block content %}
+{% endblock %}
+</div>
+{% bootstrap_javascript jquery='full' %}
+</body>
+</html>

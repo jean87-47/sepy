@@ -1,0 +1,27 @@
+{%  extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block css %}
+<style>
+    h2{
+    background-color : Orange;
+    color:White;
+    }
+     h4,a{color: DarkKhaki;}
+    h6{color:Grey;}
+    h4{color:DimGrey;}
+
+
+</style>
+{% endblock %}
+
+{% block content %}
+<br>
+<br>
+<h4>비밀번호는 수정가능하지 않습니다.</h4>
+<form method="POST">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <button class="btn btn-primary">회원수정</button>
+</form>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% load socialaccount %}
+<style>
+    h1{
+    background-color : Orange;
+    color:White;
+    }
+    h2{color:DarkKhaki;}
+</style>
+
+<br>
+<br>
+
+<h1>article의 첫페이지입니다.</h1>
+<h3><a href="{% url 'articles:list' %}">article의 글목록으로 갈까요</a></h3>
+<h3><a href="{% url 'articles:new' %}">new(get 방식)</a></h3>
+<h3><a href="{% url 'articles:create' %}">새글생성</a></h3>
+<br>
+<hr>
+{% if request.user.is_authenticated %}
+<p><h2>{{ user.username }}님  환영합니다.</h2></p>
+
+<h3><a href="{% url 'articles:create' %}">새글생성</a></h3>
+{% else %}
+<h2><a href="{% provider_login_url 'naver' method='oauth2' %}">네이버 로그인</a></h2>
+<h2><a href="/accounts/naver/login/?process=login/">naver login</a></h2>
+
+
+
+{% endif %}
+
+

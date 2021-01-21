@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block css %}
+<style>
+    h2{
+    background-color : Orange;
+    color:White;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<br>
+<h2>{{ id }}번째 글입니다.</h2>
+<h4>{{ content }}</h4>
+<h4>{{ content.length }}</h4>
+<h4> {{ content|truncatechars:5 }}</h4>
+<br>
+<hr>
+<h2>댓글들</h2>
+<ul>
+  {% for reply in replies %}
+    <li>
+        {{ forloop.counter }} . {{ reply }}
+    </li>
+    {% empty %}
+    <p>댓글을 작성해주세요</p>
+  {% endfor %}
+</ul>
+{% if user   == 'sepy' %}
+<h4>수정 삭제</h4>
+{% else %}
+<h4>권한이 없습니다.</h4>
+{% endif %}
+{% endblock %}

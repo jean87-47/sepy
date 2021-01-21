@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block css %}
+<style>
+    h2{
+    background-color : Orange;
+    color:White;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<br><br>
+<h2>게시글입니다.</h2>
+<form action="/articles/{{ article.pk }}/update_get/">
+    <p>title</p>
+    <p> <input type="text" name="title" value="{{ article.title }}" autofocus required></p>
+    <br><br>
+
+    <p> content</p>
+    <p><textarea name="content"  cols="50" rows="5">{{ article.content }}</textarea></p>
+    <p><input type="file" name="image" ></p>
+    <p><button class="btn btn-secondary" >제출</button></p>
+
+</form>
+{% endblock %}

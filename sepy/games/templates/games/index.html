@@ -1,0 +1,48 @@
+{% load socialaccount %}
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<h1>안녕하세요 sepy입니다.</h1>
+<h2><a href="{% url 'games:lotto' %}">lotto </a>
+</h2>
+<h2><a href="{% url 'games:pick_present' %}">pick_present</a></h2>
+<h2><a href="{% url 'games:hi' name='sepy' %}"> hi</a></h2>
+{% if c and d %}
+<h2><a href="{% url 'games:add' a=c  b=d  %}">add</a></h2>
+{% endif %}
+<h2><a href="{% url 'games:number' %}">number지정</a></h2>
+{% if c %}
+<h2><a href="{% url 'games:posts' id=c %}"> posts</a></h2>
+
+{% endif %}
+<h2><a href="/games/lotto/ ">lotto로 가기 </a></h2>
+
+<h2><a href="{% url 'articles:index' %}">articles로 가기</a></h2>
+
+{% if user.is_authenticated %}
+<h2 style="color:OrangeRed"> CAUTION :  로그아웃하실 때 네이버에서도 로그아웃하시길 바랍니다.
+      </h2>
+<h2><a href="{% url 'account_logout' %}">로그아웃</a></h2>
+
+
+
+
+
+{% else %}
+<h2><a href="{% provider_login_url 'naver' method='oauth2' process='login'  %}">naver 로그인</a></h2>
+<h2><a href="{% url 'account_login' %}">로그인</a></h2>
+<h3 style =" color:OrangeRed">네이버 계정으로 로그인 하시길 바랍니다. <br>
+
+</h3>
+
+<h2><a href="/accounts/naver/login/?process=login/">naver login</a></h2>
+
+
+
+
+{% endif %}
+</body>
+</html>

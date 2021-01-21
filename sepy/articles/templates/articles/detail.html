@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block css %}
+<style>
+    h3 a{
+    color:DarkKhaki;
+    }
+
+    h5{
+    color:DimGray;
+    }
+
+
+</style>
+{% endblock %}
+{% block content %}
+<h3><a href="">{{ article.title }}</a></h3>
+<hr>
+<h5>{{ article.user }}</h5>
+{% if article.image %}
+<p> <img src="{{ article.image.url }}"  width="500"></p>
+{% endif %}
+<h5> {{ article.content }} </h5>
+{% if article.image_thumbnail %}
+<p><img src="{{ article.image_thumbnail.url }}"></p>
+{% endif %}
+<h5>{{ article.created_at }}</h5>
+<h5>{{ article.updated_at }}</h5>
+<hr>
+<form action="{% url 'articles:delete' pk=article.pk %}" method="POST" class="d-inline">
+    {% csrf_token %}
+    <button class="btn-btn secondary">글삭제</button>
+</form> ...............
+<a href="{% url 'articles:edit' pk=article.pk %}"><button class="btn btn-secondary">글수정</button> </a>
+<hr>
+
+<a href="{% url 'articles:like' pk=article.pk %}"> 좋아요
+ <i class="fas fa-heart fa-lg animated hinge delay-1s" style="color: OrangeRed;"></i>
+</a> ............ {{ article.like_users.count }}명이 좋아합니다.
+<br>
+<hr>
+
+<h4> <i class="fas fa-comment" style="color :silver"></i>
+
+
+<br>
+{% for comment in article.comment_set.all %}
+    <h5>{{ comment.pk }}..{{ comment.user }} :
+        {{ comment.content }} </h5>
+<br>
+<p><a href="{% url 'articles:comment_delete' pk=comment.pk %}">댓글 지우기</a></p>
+<hr>
+{% endfor %}
+
+<hr>
+
+
+
+
+<h4 class="animate__animated animate__bounce"> <i class="far fa-comment-dots" style="color:silver"></i>
+
+<form action="{% url 'articles:comments' pk=article.pk %}" method="POST">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <button class="btn btn-primary">저장</button>
+
+</form>
+
+
+{% endblock %}

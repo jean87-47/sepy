@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    h2{
+    background-color : Orange;
+    color:White;
+    }
+
+    a,h4{color: DarkKhaki;}
+    h5{color:Grey;}
+    h6{color:DimGrey;}
+
+
+
+</style>
+<h2>게시글 목록</h2>
+<br><br>
+{% for article in articles %}
+
+<h4>
+    {% if article.image %}
+
+ <img src="{{ article.image_thumbnail.url }}"> {% endif %}
+    <a href="{% url 'articles:detail' pk=article.pk %}" > {{ article.title }}</a></h4>
+
+<h6>  {{ article.created_date }}</h6>
+
+
+<h5> {{ article.content }}</h5>
+<h6><a href="/articles/{{ article.pk }}/">detail</a></h6>
+<br><br>
+{% endfor %}
+<h4><a href="{% url 'articles:index' %}">home</a></h4>
+<br><br>
+<h2>게시판 목록</h2>
+<table class="table">
+    <thead class="thead-light">
+    <tr>
+        <th scope="col">number</th>
+        <th scope="col">제목</th>
+        <th scope="col">작성자</th>
+        <th scope="col">썸네일</th>
+        <th scope="col"> 작성시간</th>
+        <th scope="col">댓글수</th>
+        <th scope="col">좋아요수</th>
+     </tr>
+    </thead>
+    <tbody>
+    {% for article in articles %}
+    <tr>
+        <th scope="row">{{ article.pk }}</th>
+        <td> <a href="{% url 'articles:detail' pk=article.pk %}">{{ article.title }}</a> </td>
+        {% if article.user %}
+        <td><a href="{% url 'accounts:detail' pk=article.user.pk %}">{{ article.user }}</td>
+        {% else %}
+        <td>unknown</td>
+        {% endif %}
+        {% if article.image_thumbnail %}
+        <td><img src="{{ article.image_thumbnail.url }}"></td>
+        {% else %}
+        <td>Sorry, no picture here</td>
+        {% endif %}
+        <td>{{ article.created_date }}</td>
+        <td>{{ article.comment_set.count }}</td>
+        <td>{{ article.like_users.count }}</td>
+
+
+    </tr>
+
+    {% endfor %}
+
+
+    </tbody>
+</table>
+{% if user.is_authenticated %}
+<h6><a href="{% url 'accounts:detail' pk=user.pk %}">회원정보</a></h6>
+{% else %}
+<h6><a href="{% url 'accounts:login' %}">로그인</a></h6>
+{% endif %}
+{% endblock %}

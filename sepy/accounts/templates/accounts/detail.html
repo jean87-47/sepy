@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block css %}
+<style>
+    h2{
+    background-color : Orange;
+    color:White;
+    }
+     h4,a{color: DarkKhaki;}
+    h6{color:Grey;}
+    h4{color:DimGrey;}
+
+
+</style>
+{% endblock %}
+
+
+{% block content %}
+<h2>{{ user.pk }}. username: {{ user.username }}</h2>
+<hr>
+<h4>사용자의 article list</h4>
+<hr>
+<ol>
+{% for article in user.article_set.all %}
+
+<li><h6>{{ article.title }}</h6>
+
+    <br>
+</li>
+
+{% endfor %}
+</ol>
+
+<h4>사용자의 comment list<h4>
+<hr>
+<ul>
+{% for comment in user.comment_set.all %}
+<li><h6> {{ comment.article.title }} :  {{ comment.content }}</h6>
+        <br>
+</li>
+{% endfor %}
+</ul>
+<hr>
+    <p><h6><a href="{% url 'articles:index' %}">홈으로</a></h6></p>
+    <p><h6>   <a href="{% url 'articles:list' %}">글목록</a></h6></p>
+
+
+
+{% if request.user == user %}
+ <p> <h6> <a href="{% url 'accounts:update' pk=user.pk %}">회원정보수정</a></h6></p>
+<form action= "{% url 'accounts:delete' %}" method="POST">
+    {% csrf_token %}
+    <button class="btn btn-primary"> 회원탈퇴</button>
+ </form>
+{% endif %}
+    <hr>
+{% if request.user != user %}
+    {% with user_followers=user.followers.all %}
+      {% if request.user in user_followers %}
+       <a href="{% url 'accounts:follow' pk=user.pk %}">팔로우취소</a>
+      {% else %}
+       <a href="{% url 'accounts:follow' pk=user.pk %}">팔로우</a>
+       {% endif %}
+
+{% endwith %}
+{% endif %}
+    <p><h6>{{ user.followers.all.count }}명이 귀하를 팔로우하고 있습니다.</h6></p>
+
+    {% for user in user.followers.all %}
+
+    <h6> {{ user }}님이 귀하를 팔로우하고 있습니다.</h6>
+    {% endfor %}
+    <hr>
+    <p><h6>귀하는 {{ user.followed_users.count }}명을 팔로우하고 있습니다.</h6></p>
+   {% for user in user.followed_users.all %}
+    <h6>{{ user }}님을 팔로우 하고 있습니다.</h6>
+    {% endfor %}
+    {% endblock %}

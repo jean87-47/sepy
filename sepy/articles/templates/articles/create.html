@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load socialaccount %}
+
+{% block css %}
+<style>
+    h2{
+    background-color : Orange;
+    color:White;
+    }
+     h4,a{color: DarkKhaki;}
+    h6{color:Grey;}
+    h4{color:DimGrey;}
+
+</style>
+{% endblock %}
+
+
+{% block content %}
+<br><br>
+{%  if request.resolver_match.url_name == 'create' %}
+<h2>새글쓰기</h2>
+{% else %}
+<h2>수정하기</h2>
+{% endif %}
+<br><br>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <button class="btn btn-primary float-right my-2"> 제출</button>
+
+</form>
+<br><hr>
+
+{% if user.is_authenticated %}
+
+<h6><a href="{% url 'account_logout' %}">로그아웃</a></h6>
+{% endif %}
+<h6><a href="{% url 'articles:index' %}">홈으로</a></h6>
+{% endblock %}
